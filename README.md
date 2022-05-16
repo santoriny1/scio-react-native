@@ -1,0 +1,2 @@
+# scio-react-native
+RemindersApp
