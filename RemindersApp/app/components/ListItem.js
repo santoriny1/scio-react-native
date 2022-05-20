@@ -15,6 +15,7 @@ const ListItem = ({ reminder, deleteReminder, openDetails }) => {
     <TouchableOpacity onPress={() => openDetails(reminder)}>
       <View style={styles.item}>
         <Text style={styles.itemText}>{reminder.id} - {reminder.title}</Text>
+        <Text>{reminder.time}</Text>
         <Button
           title='Delete'
           color='#8A0808'

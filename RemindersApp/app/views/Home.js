@@ -6,21 +6,18 @@ import {
   Image,
   Text,
   FlatList,
+  TouchableOpacity
 } from 'react-native';
 import ListItem from '../components/ListItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-/*
-REMINDER
-id: int
-title: string
-notes: string
-time: date - timestamp
-*/
-
-
-const Home = ({ navigation, name = 'Jona' }) => {
+const Home = ({ navigation, name = 'David' }) => {
   const [reminders, setReminders] = React.useState([])
+  let newDate = new Date()
+  let date = newDate.getDate()
+  let month = newDate.getMonth() + 1
+  let year = newDate.getFullYear()
+  const separator = "/"
 
   React.useEffect(() => {
     getData()
@@ -37,7 +34,8 @@ const Home = ({ navigation, name = 'Jona' }) => {
       id: newId,
       title: 'New Reminder',
       notes: '',
-      time: new Date().getTime()
+      time: `${date}${separator}${month}${separator}${year}`,
+      image: ''
     }
     const newReminders = [...reminders, newItem]
     setReminders(newReminders)
@@ -88,18 +86,16 @@ const Home = ({ navigation, name = 'Jona' }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome {name}</Text>
-      <Button
-        title="Go to my profile"
-        onPress={() =>
-          navigation.navigate('Profile', { name: 'Jona' })
-        }
-      />
-      <Button
-        color="#380B61"
-        title="Add Reminder"
-        onPress={addReminder}
-      />
-      <Image source={{ uri: "https://picsum.photos/400" }} style={styles.image} />
+      <View style={styles.buttons}>
+        <Button
+          title="Profile"
+          onPress={() =>
+            navigation.navigate('Profile', { name: 'David' })
+          }
+        />
+        <Text>   </Text>
+        <TouchableOpacity style={styles.add} onPress={addReminder}><Text style={styles.text}>+</Text></TouchableOpacity>
+      </View>
       <View style={styles.listContainer}>
         <FlatList
           data={reminders}
@@ -127,14 +123,29 @@ const styles = StyleSheet.create({
     color: '#435460',
     textAlign: 'center',
   },
-  image: {
-    width: 100,
-    height: 100,
-    resizeMode: 'contain',
-    alignSelf: 'center',
-  },
   listContainer: {
     flex: 1,
+  },
+  buttons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  add: {
+    width: 45,
+    height: 45,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 100,
+    backgroundColor: '#008F39',
+  },
+  text: {
+    color: '#FFFFFF',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 22,
   },
 })
 
